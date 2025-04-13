@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Me amas?</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #8e2de2, #a55eea);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 30px;
+    }
+
+    button {
+      background-color: white;
+      color: #8e2de2;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background-color: #f3e5f5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>¿Me amas?</h1>
+
+  <div class="btn-container">
+    <button onclick="window.location.href='corazon.html'">Sí</button>
+    <button onclick="alert('No se vale decir que no, chinga tu madre y di que si')">No</button>
+
