@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi Reyna te amo demasiado</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    h1 {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      color: #ff69b4;
+      font-size: 2.5em;
+      z-index: 10;
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    .letter-btn {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .letter-btn img {
+      width: 80px;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 0 10px #ff69b4);
+    }
+
+    .letter-btn:hover img {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Reyna te amo demasiado</h1>
+  <canvas id="heartCanvas"></canvas>
+
+  <!-- Botón de carta -->
+  <button class="letter-btn" onclick="window.open('carta.html', '_blank')">
+    <img src="imagen/cart.gif" alt="Carta de amor">
+  </button>
+
+  <!-- Música de fondo -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="music/cora.mp3" type="audio/mp3">
+    Tu navegador no soporta el audio.
+  </audio>
+
+  <script>
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const particles = [];
+
+    function HeartParticle(t) {
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = -(
+        13 * Math.cos(t) -
+        5 * Math.cos(2 * t) -
+        2 * Math.cos(3 * t) -
+        Math.cos(4 * t)
+      );
+      this.x = width / 2 + x * 15;
+      this.y = height / 2 + y * 15;
+      this.alpha = 1;
+      this.size = 1 + Math.random() * 2;
+      this.color = `hsl(${300 + Math.random() * 60}, 100%, ${60 + Math.random() * 20}%)`;
+      this.update = function () {
+        this.y -= 0.4;
+        this.alpha -= 0.008;
+      };
+      this.draw = function () {
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      };
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+      ctx.fillRect(0, 0, width, height);
+
+      // Genera más partículas
+      for (let i = 0; i < 6; i++) {
+        const t = Math.random() * Math.PI * 2;
+        particles.push(new HeartParticle(t));
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.update();
+        p.draw();
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
